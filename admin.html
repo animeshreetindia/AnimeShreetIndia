@@ -34,8 +34,8 @@ img{border-radius:6px}
 <div id="panel" class="box">
 
 <h2>Anime Manager (Only Title + Photo)</h2>
-<input id="name" placeholder="Anime Title">
-<input id="photo" placeholder="Anime Photo URL">
+<input id="animeName" placeholder="Anime Title">
+<input id="animePhoto" placeholder="Anime Photo URL">
 <button onclick="saveAnime()">Save / Update Anime</button>
 
 <h3>Anime List</h3>
@@ -47,7 +47,6 @@ img{border-radius:6px}
 
 <select id="animeSelect"></select>
 
-<!-- OPTIONAL (1–16) -->
 <input id="season" placeholder="Season (optional)">
 <input id="runtime" placeholder="Runtime (optional)">
 <input id="totalep" placeholder="Total Episodes (optional)">
@@ -58,7 +57,6 @@ img{border-radius:6px}
 <input id="rating" placeholder="Rating (optional)">
 <textarea id="desc" placeholder="Description (optional)"></textarea>
 
-<!-- COMPULSORY (17–20) -->
 <input id="epName" placeholder="Episode Name (Required)">
 <input id="watch" placeholder="Watch Link (Required)">
 <input id="download" placeholder="Download Link (Required)">
@@ -113,8 +111,8 @@ function logout(){ auth.signOut(); }
 /* ===== ANIME ===== */
 function saveAnime(){
  let data={
-  name:name.value,
-  photo:photo.value
+  name: animeName.value,
+  photo: animePhoto.value
  };
 
  if(editAnimeId){
@@ -123,12 +121,12 @@ function saveAnime(){
  }else{
   db.collection("anime").add(data);
  }
- name.value=""; photo.value="";
+
+ animeName.value="";
+ animePhoto.value="";
 }
 
 function loadAnime(){
- animeList.innerHTML="";
- animeSelect.innerHTML="";
  db.collection("anime").onSnapshot(snap=>{
   animeList.innerHTML="";
   animeSelect.innerHTML="";
@@ -149,8 +147,8 @@ function loadAnime(){
 function editAnime(id){
  db.collection("anime").doc(id).get().then(doc=>{
   let a=doc.data();
-  name.value=a.name;
-  photo.value=a.photo;
+  animeName.value=a.name;
+  animePhoto.value=a.photo;
   editAnimeId=id;
  });
 }
@@ -199,7 +197,6 @@ function saveEpisode(){
 }
 
 function loadEpisodes(){
- episodeList.innerHTML="";
  db.collection("episodes").onSnapshot(snap=>{
   episodeList.innerHTML="";
   snap.forEach(doc=>{
