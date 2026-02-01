@@ -2,55 +2,68 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Anime, Movie, Cartoon</title>
+<title>Watch Anime</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{background:black;color:white;font-family:Arial;padding:10px}
+body{
+  margin:0;
+  background:linear-gradient(#000,#111);
+  color:white;
+  font-family:Arial;
+  padding:10px
+}
 
-.header{text-align:center}
-.poster{max-width:100%;border-radius:12px;margin:10px 0}
+h2{text-align:center;color:#00ffff}
 
-.box{border:2px solid red;border-radius:10px;padding:10px;margin:10px 0}
+.poster{
+  width:100%;
+  border-radius:12px;
+  margin:10px 0;
+}
 
-.c1{color:red}
-.c2{color:yellow}
-.c3{color:deepskyblue}
-.c4{color:darkviolet}
-.c5{color:orange}
-
-.ep{
-  border:2px solid cyan;
+.box{
+  border:2px solid #ff004c;
   border-radius:10px;
   padding:10px;
   margin:10px 0;
-  background:#111
+  background:#111;
+}
+
+.ep{
+  border:2px solid cyan;
+  border-radius:12px;
+  padding:10px;
+  margin:12px 0;
+  background:#0b0b0b;
 }
 
 .btn{
  display:inline-block;
- padding:8px 12px;
+ padding:10px 14px;
  border-radius:8px;
  margin:5px;
  color:white;
  text-decoration:none;
- font-weight:bold
+ font-weight:bold;
 }
-.watch{background:green}
 .download{background:red}
-.mega{background:purple}
+
+iframe{
+  width:100%;
+  height:200px;
+  border-radius:12px;
+  border:none;
+  margin-top:10px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- TOP TITLE -->
-<h2 style="text-align:center;color:cyan">Anime, Movie, Cartoon</h2>
+<h2 id="animeTitle">Anime</h2>
 
-<div class="header">
-<h2 id="title"></h2>
 <img id="photo" class="poster">
-</div>
 
 <div id="details" class="box"></div>
 
@@ -73,7 +86,7 @@ var db = firebase.firestore();
 const params = new URLSearchParams(window.location.search);
 const animeName = decodeURIComponent(params.get("name") || "");
 
-document.getElementById("title").innerText = "Name: " + animeName;
+document.getElementById("animeTitle").innerText = animeName;
 
 let currentAnimeId = "";
 
@@ -85,17 +98,11 @@ db.collection("anime").where("name","==",animeName).get().then(snap=>{
   photo.src = a.photo || "";
 
   details.innerHTML = `
-   <div class="c1">1. Full Name: ${a.fullName||""}</div>
-   <div class="c2">2. About: ${a.about||""}</div>
-   <div class="c3">3. Season: ${a.season||""}</div>
-   <div class="c4">4. Runtime: ${a.runtime||""}</div>
-   <div class="c5">5. Total Ep: ${a.totalep||""}</div>
-   <div class="c1">6. Network: ${a.network||""}</div>
-   <div class="c2">7. Year: ${a.year||""}</div>
-   <div class="c3">8. Language: ${a.lang||""}</div>
-   <div class="c4">9. Genre: ${a.genre||""}</div>
-   <div class="c5">10. Rating: ${a.rating||""}</div>
-   <div class="c1">11. Description: ${a.desc||""}</div>
+   <b>Season:</b> ${a.season||""}<br>
+   <b>Year:</b> ${a.year||""}<br>
+   <b>Language:</b> ${a.lang||""}<br>
+   <b>Genre:</b> ${a.genre||""}<br>
+   <b>Description:</b> ${a.desc||""}
   `;
  });
 });
@@ -109,10 +116,11 @@ db.collection("episodes").onSnapshot(snap=>{
   if(e.animeId === currentAnimeId){
    episodeList.innerHTML += `
     <div class="ep">
-      <div class="c3">17. Episode: ${e.epName}</div>
-      <a href="${e.watch}" class="btn watch" target="_blank">▶ Watch</a>
+      <h4>Episode: ${e.epName}</h4>
+
+      <iframe src="${e.watch}" allowfullscreen></iframe>
+
       <a href="${e.download}" class="btn download" target="_blank">⬇ Download</a>
-      <a href="${e.mega}" class="btn mega" target="_blank">💾 Mega</a>
     </div>
    `;
   }
