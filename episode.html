@@ -11,7 +11,28 @@ body{
   font-family: Arial, sans-serif;
   padding:10px;
 }
+.footer-social{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#111;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  padding:10px;
+  z-index:999;
+}
 
+.footer-social a{
+  padding:8px 12px;
+  border-radius:8px;
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:bold;
+  background:linear-gradient(45deg,#ff00cc,#00ffff);
+}
 /* ===== BANNER ===== */
 #banner{
   padding:40px 10px 25px;
@@ -157,6 +178,11 @@ db.collection("episodes")
   });
 });
 </script>
-
+<div class="footer-social">
+  <a href="https://whatsapp.com/channel/0029VbBuUn8JuyA9gx2WVW1q target=" target="_blank">WhatsApp</a>
+  <a href="https://t.me/+ZicfPST7Z0AyN2E1" target="_blank">Telegram</a>
+  <a href="https://www.instagram.com/animeshreet?igsh=MW5oM3A3emZlYnAwdA==" target="_blank">Instagram</a>
+  <a href="https://discord.gg/9zrAmbeqG" target="_blank">Discord</a>
+</div>
 </body>
 </html>
